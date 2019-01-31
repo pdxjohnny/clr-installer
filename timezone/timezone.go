@@ -74,7 +74,8 @@ func Load() ([]*TimeZone, error) {
 	validTimezones = []*TimeZone{}
 
 	w := bytes.NewBuffer(nil)
-	err := cmd.Run(w, "timedatectl", "list-timezones")
+	// err := cmd.Run(w, "timedatectl", "list-timezones")
+	err := cmd.Run(w, "sh", "-c", "awk '{print $3}' /usr/share/zoneinfo/zone.tab | grep \\/ | sort | uniq")
 	if err != nil {
 		return nil, err
 	}
@@ -91,6 +92,13 @@ func Load() ([]*TimeZone, error) {
 
 		validTimezones = append(validTimezones, tz)
 	}
+
+	// UTC doesn't show up in /usr/share/zoneinfo/zone.tab
+	tz := &TimeZone{
+		Code: "UTC",
+	}
+
+	validTimezones = append(validTimezones, tz)
 
 	return validTimezones, nil
 }

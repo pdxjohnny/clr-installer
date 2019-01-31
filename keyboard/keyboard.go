@@ -73,7 +73,8 @@ func LoadKeymaps() ([]*Keymap, error) {
 	validKeyboards = []*Keymap{}
 
 	w := bytes.NewBuffer(nil)
-	err := cmd.Run(w, "localectl", "list-keymaps", "--no-pager")
+	// err := cmd.Run(w, "localectl", "list-keymaps", "--no-pager")
+	err := cmd.Run(w, "sh", "-c", "find /usr/share/keymaps/ -type f  | sed 's/.*\\///g' | sed 's/\\.map.*//g'")
 	if err != nil {
 		return nil, err
 	}
