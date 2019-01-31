@@ -9,6 +9,9 @@ The following bundles are required in order to run clr-installer:
 + sysadmin-basic (for kbd)
 + storage-utils
 + network-basic
++ go-basic
++ c-basic
++ make
 
 ## How to test?
 Make sure there is extra storage space, such as a USB memory stick, and choose it while running the installer.
